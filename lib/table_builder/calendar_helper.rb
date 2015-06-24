@@ -45,7 +45,7 @@ module CalendarHelper
           #Add an 8th column to the row
           #concat('<td>Col 8</td>') if(day.wday == @calendar.last_weekday)
           if @row_header && day.wday ==  @calendar.last_weekday
-            row_header_options = td_options(day, id_pattern)
+            row_header_options = td_options(day, id_pattern, [])
             row_header_options[:class] ||= ""
             row_header_options[:class] << " row_header"
             concat(tag(:td, row_header_options, true))
