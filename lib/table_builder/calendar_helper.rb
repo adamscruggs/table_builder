@@ -34,16 +34,21 @@ module CalendarHelper
       day_method = options.delete(:day_method) || :date
       id_pattern = options.delete(:id)
       td_classes = options.delete(:class_list) || []
+      class_field_append = options.delete(:class_field_append)
       tbody do
         @calendar.objects_for_days(@objects, day_method).to_a.sort{|a1, a2| a1.first <=> a2.first }.each do |o|
           key, array = o
           day, objects = array
+          if !objects.nil? and !class_field_append.nil? and class_field_append != ''
+            objects.uniq{|x| x[class_field_append]}.each do |obj|
+              td_classes << class_field_append + '-' + obj
+            end
+          end
+          plans = objects.select { |object| object.
           concat(tag(:tr, options, true)) if(day.wday ==  @calendar.first_weekday)
           concat(tag(:td, td_options(day, id_pattern, td_classes), true))
           yield(day, objects)
           concat('</td>')
-          #Add an 8th column to the row
-          #concat('<td>Col 8</td>') if(day.wday == @calendar.last_weekday)
           if @row_header && day.wday ==  @calendar.last_weekday
             row_header_options = td_options(day, id_pattern, [])
             row_header_options[:class] ||= ""
