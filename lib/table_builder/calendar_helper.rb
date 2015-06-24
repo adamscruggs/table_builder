@@ -46,6 +46,11 @@ module CalendarHelper
           end
           concat(tag(:tr, options, true)) if(day.wday ==  @calendar.first_weekday)
           concat(tag(:td, td_options(day, id_pattern, td_classes), true))
+          if !objects.nil? and !class_field_append.nil? and class_field_append != ''
+            objects.map{|t| t[class_field_append]}.uniq.each do |obj|
+              td_classes = td_classes - [class_field_append + '-' + obj.to_s]
+            end
+          end
           yield(day, objects)
           concat('</td>')
           if @row_header && day.wday ==  @calendar.last_weekday
