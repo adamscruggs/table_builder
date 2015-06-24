@@ -40,8 +40,8 @@ module CalendarHelper
           key, array = o
           day, objects = array
           if !objects.nil? and !class_field_append.nil? and class_field_append != ''
-            objects.uniq{|x| x[class_field_append]}.each do |obj|
-              td_classes << class_field_append + '-' + obj
+            objects.map{|t| t[class_field_append]}.uniq.each do |obj|
+              td_classes << class_field_append + '-' + obj.to_s
             end
           end
           concat(tag(:tr, options, true)) if(day.wday ==  @calendar.first_weekday)
