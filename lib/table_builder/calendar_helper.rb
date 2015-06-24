@@ -5,7 +5,7 @@ module CalendarHelper
   #
   # @param [Hash] options extra options
   #
-  #   :row_header if true, each row will have an extra cell at the beginning, as a row header. A typical usage would be
+  #   :row_header if true, each row will have an extra cell at the end, as a row header. A typical usage would be
   #   to output week numbers. When the block is called, it will get the date that would normally be passed to the
   #   first day of the week (to give you some context) and a nil list of objects (and that's how you recognize it as
   #   a header, because empty days get an empty array, not nil).
@@ -38,7 +38,7 @@ module CalendarHelper
           key, array = o
           day, objects = array
           concat(tag(:tr, options, true)) if(day.wday ==  @calendar.first_weekday)
-          if @row_header && day.wday ==  @calendar.first_weekday
+          if @row_header && day.wday ==  @calendar.last_weekday
             row_header_options = td_options(day, id_pattern)
             row_header_options[:class] ||= ""
             row_header_options[:class] << " row_header"
@@ -50,7 +50,7 @@ module CalendarHelper
           yield(day, objects)
           concat('</td>')
           #Add an 8th column to the row
-          concat('<td>Col 8</td>') if(day.wday == @calendar.last_weekday)
+          #concat('<td>Col 8</td>') if(day.wday == @calendar.last_weekday)
           concat('</tr>') if(day.wday ==  @calendar.last_weekday)
         end
       end
