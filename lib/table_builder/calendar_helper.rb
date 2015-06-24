@@ -48,7 +48,7 @@ module CalendarHelper
             row_header_options[:class] ||= ""
             row_header_options[:class] << " row_header"
             concat(tag(:td, row_header_options, true))
-            yield(day, nil)
+            yield(nil)
             concat("</td>")
           end
           concat('</tr>') if(day.wday ==  @calendar.last_weekday)
