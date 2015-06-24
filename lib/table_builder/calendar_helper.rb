@@ -44,7 +44,6 @@ module CalendarHelper
               td_classes << class_field_append + '-' + obj
             end
           end
-          plans = objects.select { |object| object.
           concat(tag(:tr, options, true)) if(day.wday ==  @calendar.first_weekday)
           concat(tag(:td, td_options(day, id_pattern, td_classes), true))
           yield(day, objects)
