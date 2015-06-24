@@ -38,6 +38,11 @@ module CalendarHelper
           key, array = o
           day, objects = array
           concat(tag(:tr, options, true)) if(day.wday ==  @calendar.first_weekday)
+          concat(tag(:td, td_options(day, id_pattern), true))
+          yield(day, objects)
+          concat('</td>')
+          #Add an 8th column to the row
+          #concat('<td>Col 8</td>') if(day.wday == @calendar.last_weekday)
           if @row_header && day.wday ==  @calendar.last_weekday
             row_header_options = td_options(day, id_pattern)
             row_header_options[:class] ||= ""
@@ -46,11 +51,6 @@ module CalendarHelper
             yield(day, nil)
             concat("</td>")
           end
-          concat(tag(:td, td_options(day, id_pattern), true))
-          yield(day, objects)
-          concat('</td>')
-          #Add an 8th column to the row
-          #concat('<td>Col 8</td>') if(day.wday == @calendar.last_weekday)
           concat('</tr>') if(day.wday ==  @calendar.last_weekday)
         end
       end
