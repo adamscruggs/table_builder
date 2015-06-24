@@ -49,7 +49,8 @@ module CalendarHelper
           concat(tag(:td, td_options(day, id_pattern), true))
           yield(day, objects)
           concat('</td>')
-          concat('<td>Summary</td>') if(day.wday == @calendar.last_weekday)
+          #Add an 8th column to the row
+          concat('<td>Col 8</td>') if(day.wday == @calendar.last_weekday)
           concat('</tr>') if(day.wday ==  @calendar.last_weekday)
         end
       end
